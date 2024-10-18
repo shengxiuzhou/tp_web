@@ -14,7 +14,7 @@ Route::get('think', function () {
     return 'hello,ThinkPHP6!';
 });
 Route::get('hello/:name', 'index/hello');
-Route::get('get_news','NewsController/get_news');
+Route::post('get_news','NewsController/get_news');
 Route::post('add_news','NewsController/add_news');
 Route::post('delete_news','NewsController/delete_news');
 Route::post('modify_news','NewsController/modify_news');

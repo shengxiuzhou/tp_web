@@ -18,11 +18,10 @@
             header('Access-Control-Allow-Origin:*');
             header('Access-Control-Allow-Methods:GET,POST,PUT,DELETE,OPTIONS');
             header('Access-Control-Allow-Headers:Origin,X-Requested-With,Content-Type,Accept,Authorization');
-        }
-        private function setCorHeaders() {
-            header('Access-Control-Allow-Origin:*');
-            header('Access-Control-Allow-Methods:GET,POST,PUT,DELETE,OPTIONS');
-            header('Access-Control-Allow-Headers:Origin,X-Requested-With,Content-Type,Accept,Authorization');
+            if ($this->request->method(true) === "OPTIONS") {
+                header('Access-Control-Max-Age:86400');
+                return '';
+            }
         }
         public function add_news() {
             // $data = [[
@@ -112,11 +111,6 @@
             }
         }
         public function get_news() {
-            if($_SERVER['REQUEST_METHOD'] == 'OPTIONS') {
-                return json([
-                    'status'=> 'ok'
-                ],200);
-            }
             $data = isset($_POST['data']) ? $_POST['data'] : ['title' => ''];
             if ($data['title']) {
                 $news = Db::table('news')->whereLike('title', $data['title'])->select();
